@@ -3,6 +3,7 @@
 #include <ctime>
 #include <conio.h>
 #include <windows.h>
+#include <shellapi.h>
 
 using namespace std;
 
@@ -41,6 +42,9 @@ int main()
 		case 1:
 			running = false;
 			break;
+		case 2:
+			ShellExecute(0, 0, L"https://github.com/Glowstudent777/Learning-CPP", 0, 0, SW_SHOW);
+			break;
 		}
 	}
 
@@ -54,7 +58,7 @@ int menu()
 	int selected = 0;    // Keeps track of which option is selected.
 	int menuIndent = 0;  // The indentation of the menu from the left side of the screen.
 	int x = 7;           // The x coordinate of the cursor.
-	int numChoices = 2;  // The number of choices we have.
+	int numChoices = 3;  // The number of choices we have.
 	bool selecting = true; // True if we are still waiting for the user to press enter.
 	bool updated = true; // True if the selected value has just been updated.
 
@@ -73,6 +77,7 @@ int menu()
 	SetConsoleTextAttribute(console, DEFAULT_COLOR);
 
 	gotoXY((menuIndent + 2), 8); cout << "Quit Program";
+	gotoXY((menuIndent + 2), 9); cout << "Github Repo";
 
 	gotoXY(menuIndent, x); cout << "->";
 	gotoXY(menuIndent, 12);
@@ -93,7 +98,7 @@ int menu()
 			}
 			break;
 		case KEY_DOWN:
-			if (selected < numChoices - 1 && x != 8)
+			if (selected < numChoices - 1 && x != 9)
 			{
 				gotoXY(menuIndent, x); cout << "  ";
 				x++;
@@ -113,11 +118,20 @@ int menu()
 		{
 
 			if (selected == 0) SetConsoleTextAttribute(console, SELECTED_COLOR);
-			gotoXY((menuIndent + 2), 7); cout << "Play Again";
+			if (firstGame) {
+				gotoXY((menuIndent + 2), 7); cout << "Play Game";
+			}
+			else {
+				gotoXY((menuIndent + 2), 7); cout << "Play Again";
+			}
 			SetConsoleTextAttribute(console, DEFAULT_COLOR);
 
 			if (selected == 1) SetConsoleTextAttribute(console, SELECTED_COLOR);
 			gotoXY((menuIndent + 2), 8); cout << "Quit Program";
+			SetConsoleTextAttribute(console, DEFAULT_COLOR);
+
+			if (selected == 2) SetConsoleTextAttribute(console, SELECTED_COLOR);
+			gotoXY((menuIndent + 2), 9); cout << "Github Repo";
 			SetConsoleTextAttribute(console, DEFAULT_COLOR);
 
 			updated = false;
