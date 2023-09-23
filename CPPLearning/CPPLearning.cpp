@@ -17,6 +17,7 @@ COORD CursorPosition; // Used for goto
 bool running = true;
 bool gameover = false;
 bool firstGame = true;
+int guesses;
 
 const int DEFAULT_COLOR = 7; // White text on black background
 const int SELECTED_COLOR = 240; // Black text on white background (you can adjust this color code)
@@ -65,6 +66,8 @@ int menu()
 	cout << "*******************************\n";
 	cout << "*          Main Menu          *\n";
 	cout << "*******************************\n\n";
+
+	cout << "Use the up and down arrow keys to navigate the menu.\n";
 
 	if (selected == 0) SetConsoleTextAttribute(console, SELECTED_COLOR);
 
@@ -116,7 +119,6 @@ int menu()
 		}
 		if (updated)
 		{
-
 			if (selected == 0) SetConsoleTextAttribute(console, SELECTED_COLOR);
 			if (firstGame) {
 				gotoXY((menuIndent + 2), 7); cout << "Play Game";
@@ -146,8 +148,9 @@ void playGame()
 
 	srand(time(0));
 	firstGame = false;
+	gameover = false;
+	guesses = 0;
 	int number = rand() % 10 + 1;
-	int guesses = 0;
 	int imanint;
 
 	cout << "I have chosen a number between 1 and 10. Try to guess it in 3 tries.\n\n";
@@ -164,7 +167,7 @@ void playGame()
 			{
 				cout << "Too high!\n\n";
 			}
-			else
+			else if (imanint < number)
 			{
 				cout << "Too low!\n\n";
 			}
@@ -176,15 +179,15 @@ void playGame()
 
 		if (imanint == number)
 		{
-			guesses++;
 			cout << "That's it! You got it in " << guesses << " guesses!\n";
-		}
-		else
-		{
-			cout << "Sorry, but I was really thinking of " << number << ".\n";
+			gameover = true;
 		}
 
-		gameover = true;
+		if (guesses >= 3)
+		{
+			cout << "Sorry, but I was really thinking of " << number << ".\n";
+			gameover = true;
+		}
 	}
 
 	_getch(); // Wait for a key press before returning to the menu
