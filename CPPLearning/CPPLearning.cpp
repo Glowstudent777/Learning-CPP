@@ -15,6 +15,7 @@ COORD CursorPosition; // Used for goto
 
 bool running = true;
 bool gameover = false;
+bool firstGame = true;
 
 const int DEFAULT_COLOR = 7; // White text on black background
 const int SELECTED_COLOR = 240; // Black text on white background (you can adjust this color code)
@@ -62,7 +63,13 @@ int menu()
 	cout << "*******************************\n\n";
 
 	if (selected == 0) SetConsoleTextAttribute(console, SELECTED_COLOR);
-	gotoXY((menuIndent + 2), 7); cout << "Play Again";
+
+	if (firstGame) {
+		gotoXY((menuIndent + 2), 7); cout << "Play Game";
+	}
+	else {
+		gotoXY((menuIndent + 2), 7); cout << "Play Again";
+	}
 	SetConsoleTextAttribute(console, DEFAULT_COLOR);
 
 	gotoXY((menuIndent + 2), 8); cout << "Quit Program";
@@ -124,6 +131,7 @@ void playGame()
 	system("cls");
 
 	srand(time(0));
+	firstGame = false;
 	int number = rand() % 10 + 1;
 	int guesses = 0;
 	int imanint;
