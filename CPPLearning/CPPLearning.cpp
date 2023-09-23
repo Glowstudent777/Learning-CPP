@@ -150,19 +150,33 @@ void playGame()
 	firstGame = false;
 	gameover = false;
 	guesses = 0;
-	int number = rand() % 10 + 1;
+	//int number = rand() % 10 + 1;
+	int number = 5;
 	int imanint;
 
 	cout << "I have chosen a number between 1 and 10. Try to guess it in 3 tries.\n\n";
 
+	cout << "Your Guess: ";
+	cin >> imanint;
+	guesses++;
+
 	while (!gameover)
 	{
-		cout << "Your Guess: ";
-		cin >> imanint;
-		guesses++;
-
-		while (imanint != number && guesses < 3)
+		while (imanint != NULL)
 		{
+			if (guesses >= 3 && imanint != number)
+			{
+				cout << "Sorry, but I was really thinking of " << number << ".\n";
+				gameover = true;
+				break;
+			}
+			else if (guesses <= 3 && imanint == number)
+			{
+				cout << "That's it! You got it in " << guesses << " guesses!\n";
+				gameover = true;
+				break;
+			}
+
 			if (imanint > number)
 			{
 				cout << "Too high!\n\n";
@@ -172,21 +186,9 @@ void playGame()
 				cout << "Too low!\n\n";
 			}
 
-			guesses++;
 			cout << "Your Guess: ";
 			cin >> imanint;
-		}
-
-		if (imanint == number)
-		{
-			cout << "That's it! You got it in " << guesses << " guesses!\n";
-			gameover = true;
-		}
-
-		if (guesses >= 3)
-		{
-			cout << "Sorry, but I was really thinking of " << number << ".\n";
-			gameover = true;
+			guesses++;
 		}
 	}
 
