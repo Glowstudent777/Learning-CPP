@@ -150,8 +150,8 @@ void playGame()
 	firstGame = false;
 	gameover = false;
 	guesses = 0;
-	//int number = rand() % 10 + 1;
-	int number = 5;
+	int number = rand() % 10 + 1;
+	//int number = 5; // For testing purposes
 	int imanint;
 
 	cout << "I have chosen a number between 1 and 10. Try to guess it in 3 tries.\n\n";
